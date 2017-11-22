@@ -13,29 +13,34 @@ This is an individual, [stage 2](https://github.com/Ada-Developers-Academy/pedag
 - Manage application data using Backbone models and collections
 - Build an attractive, robust, and feature-rich user interface
 
-## Wave 1
+## General Requirements
 
-In wave 1, you'll use our new functionality (Underscore templates, Backbone models and collections) to achieve feature parity with the original TREK project, including some of the optionals:
+The code you write should obey the following rules:
+
+- Use Backbone's event workflow. Code that responds to DOM events should be separate from code that updates the DOM.
+- Any dynamic elements on the page shall be rendered using Underscore templates
+- Any errors encountered while interacting with the API shall be politely reported to the user
+
+## Wave 1: Displaying Data
+
+In wave 1, you'll use our new functionality (Underscore templates, Backbone models and collections) to achieve feature parity with the original TREK project.
 
 - A user can click a link to see a list of trips
 - A user can click on a trip to see details of that trip
+
+## Wave 2: Creating Data
+
+In wave 2, your focus should be on sending data to the server and handling the response. Remember to pay careful attention to error handling!
+
 - A user can create a new trip
 - A user can reserve a spot on a trip
   - Question: is Backbone API integration useful here? How would this work? What other options are there?
-- The code you write should obey the following rules:
-  - Use Backbone's event workflow. Code that responds to DOM events should be separate from code that updates the DOM.
-  - Any dynamic elements on the page shall be rendered using Underscore templates
-  - Any errors encountered while interacting with the API shall be politely reported to the user
 
-You do not need to implement sorting or filtering yet.
-
-## Wave 2
-
-Wave 2 is all about data management.
+## Wave 3: Organizing Data
 
 ### Sorting
 
-Users should be able to sort trips by:
+Users should be able to sort the list of trips by:
 - Name
 - Category
 - Continent
@@ -53,11 +58,11 @@ The list of displayed trips should be updated with every keystroke. This means t
 
 Your app should gracefully handle the case where none of the trips match the filter.
 
-## Wireframes
+## Optional Wireframes
 
 These wireframes are optional. Some of the content matches closely with what we've done before, but some (such as getting validation failures to appear inline) is quite challenging!
 
-For an extra challenge, once a user has attempted to submit a form unsuccessfully and validation errors have been shown, have them resolve themselves as the user types.
+For an extra challenge, once a user has attempted to submit a form unsuccessfully and validation errors have been shown, have the errors resolve themselves as the user types.
 
 #### Normal View
 
