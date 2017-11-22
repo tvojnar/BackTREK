@@ -10,7 +10,7 @@ For this project we'll be returning to the TREK API, using Backbone to build an 
 - Manage application data using Backbone models and collections
 - Build an attractive, robust, and feature-rich user interface
 
-### Wave 1
+## Wave 1
 
 In wave 1, you'll use our new functionality (Underscore templates, Backbone models and collections) to achieve feature parity with the original TREK project, including some of the optionals:
 
@@ -26,11 +26,11 @@ In wave 1, you'll use our new functionality (Underscore templates, Backbone mode
 
 You do not need to implement sorting or filtering yet.
 
-### Wave 2
+## Wave 2
 
 Wave 2 is all about data management.
 
-#### Sorting
+### Sorting
 
 Users should be able to sort trips by:
 - Name
@@ -39,7 +39,7 @@ Users should be able to sort trips by:
 - Duration
 - Budget
 
-#### Filtering
+### Filtering
 
 Add a form to the top of your site. The form should have a dropdown to select `Name`, `Category`, `Continent` or `Max Budget`, as well as a text box.
 
@@ -50,7 +50,7 @@ The list of displayed trips should be updated with every keystroke. This means t
 
 Your app should gracefully handle the case where none of the trips match the filter.
 
-### Wireframes
+## Wireframes
 
 These wireframes are optional. Some of the content matches closely with what we've done before, but some (such as getting validation failures to appear inline) is quite challenging!
 
