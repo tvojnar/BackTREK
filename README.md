@@ -21,6 +21,8 @@ The code you write should obey the following rules:
 - Any dynamic elements on the page shall be rendered using Underscore templates
 - Any errors encountered while interacting with the API shall be politely reported to the user
 
+This project has 3 waves, arranged more-or-less in order of difficulty. It's worthwhile to read through all three before you start, and come up with a plan for how to organize your code. However, make sure to pace yourself, and only try to solve one problem at a time.
+
 ## Wave 1: Displaying Data
 
 In wave 1, you'll use our new functionality (Underscore templates, Backbone models and collections) to achieve feature parity with the original TREK project.
