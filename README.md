@@ -4,8 +4,11 @@
 
 For this project we'll be returning to the TREK API, using Backbone to build an application that can handle data in complex ways.
 
+This is an individual, [stage 2](https://github.com/Ada-Developers-Academy/pedagogy/blob/master/rule-of-three.md#stage-2) project.
+
 ## Learning Goals
 
+- Generate HTML using Underscore templates
 - Use Backbone and jQuery to work with a complex API
 - Manage application data using Backbone models and collections
 - Build an attractive, robust, and feature-rich user interface
