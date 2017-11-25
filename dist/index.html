@@ -6,53 +6,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body id="override-foundation">
-  <header>
-    <button id="add-trip-button" class="button float-right">Add a trip</button>
-    <h1>BackTREK</h1>
-  </header>
+  <div id="page-wrap">
+    <div id="overlay"></div>
+    <header>
+      <button id="add-trip-button" class="button float-right">Add a trip</button>
+      <h1>BackTREK</h1>
+    </header>
 
-  <main class="clearfix">
-    <section id="status-messages" class="columns small-12">
-      <button class="clear float-right">
-        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
-      </button>
+    <main class="clearfix">
+      <section id="status-messages" class="columns small-12">
+        <button class="clear float-right">
+          <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+        </button>
 
-      <ul>
-      </ul>
-    </section>
+        <ul>
+        </ul>
+      </section>
 
-    <section id="trip-table" class="columns small-12 medium-7">
-      <form class="filter">
-        <select class="filter-field columns large-3 capitalize">
-          <option disabled selected value>Filter by</option>
-        </select>
+      <section id="trip-table" class="columns small-12 medium-7">
+        <form class="filter">
+          <select class="filter-field columns large-3 capitalize">
+            <option disabled selected value>Filter by</option>
+          </select>
 
-        <div class="columns large-9">
-          <input type="text" name="filter-value"></input>
-        </div>
-      </form>
-      <table id="trip-table">
-        <thead>
-          <tr>
-          </tr>
-        </thead>
-        <tbody>
+          <div class="columns large-9">
+            <input type="text" name="filter-value"></input>
+          </div>
+        </form>
+        <table id="trip-table">
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+          <tbody>
 
-        </tbody>
-      </table>
-    </section>
+          </tbody>
+        </table>
+      </section>
 
-    <article id="trip-details" class="columns small-12 medium-5">
-    </article>
-  </main>
+      <article id="trip-details" class="columns small-12 medium-5">
+      </article>
 
-  <footer>
-    <p>
-      &copy; 2017,
-      <a href="https://adadevelopersacademy.org">Ada Developers Academy</a>.
-      License: <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a>
-    </p>
-  </footer>
+    </main>
+
+    <footer>
+      <p>
+        &copy; 2017,
+        <a href="https://adadevelopersacademy.org">Ada Developers Academy</a>.
+        License: <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a>
+      </p>
+    </footer>
+  </div>
+
+  <aside id="add-trip">
+    <h2>Add a Trip</h2>
+  </aside>
 
   <script type="text/template" id="trip-table-header-template">
     <th class="sort <%- field %> capitalize"><%- field %></th>
@@ -95,7 +103,21 @@
       <% fields.forEach((field) => { %>
         <div class="input-container <%- field.name %>">
           <label for="<%- field.name %>" class="capitalize"><%- field.name %></label>
-          <input type="<%- field.type %>" name="<%- field.name %>"></input>
+
+          <% if (['text', 'number'].includes(field.type)) { %>
+            <input type="<%- field.type %>" name="<%- field.name %>" class="form-input"></input>
+
+          <% } else if (field.type == 'textarea') { %>
+            <textarea name="<%- field.name %>" class="form-input"></textarea>
+
+          <% } else if (field.type == 'select') { %>
+            <select name="<%- field.name %>" class="capitalize form-input">
+              <% field.values.forEach((value) => { %>
+                <option value="<%- value %>"><%- value %></option>
+              <% }); %>
+            </select>
+
+          <% } %>
         </div>
       <% }); %>
       <input type="submit" value="<%- submitText %>" class="button"></input>

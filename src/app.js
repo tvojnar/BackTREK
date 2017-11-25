@@ -7,10 +7,11 @@ import './css/foundation.css';
 import './css/style.css';
 
 // Backbone Modules
+import Trip from 'models/trip';
 import TripCollection from 'collections/trip_collection';
 import Reservation from 'models/reservation';
 
-// "Views" (not quite views)
+// "Elements" (basically just views without views)
 import StatusManager from 'elements/status_manager';
 import ManagedForm from 'elements/managed_form';
 import TEMPLATES from 'elements/underscore_templates';
@@ -120,11 +121,52 @@ const renderTripDetails = function(trip, element) {
   const generatedHTML = $(TEMPLATES.tripDetails({trip: trip}));
 
   const reservation = new Reservation({ tripId: trip.id });
-  const form = new ManagedForm(reservation, statusManager, { submitText: 'Reserve'} );
+  const form = new ManagedForm(reservation, statusManager, {
+    submitText: 'Reserve',
+    successText: 'Successfully reserved spot'
+  });
   generatedHTML.find('.register').append(form.$el);
   $('#trip-details').html(generatedHTML);
   $('#trip-details').show();
 };
+
+// ======================
+// Add Trip Modal
+// ======================
+class AddTripModal {
+  constructor(modal) {
+    this.overlay = $('#overlay');
+    this.modal = modal;
+    $('#add-trip-button').on('click', this.show.bind(this));
+    this.overlay.on('click', this.hide.bind(this));
+
+    this.trip = new Trip()
+    this.form = new ManagedForm(this.trip, statusManager, {
+      submitText: 'Add Trip',
+      successText: 'Successfully added trip',
+      collection: tripList,
+    });
+    this.buildCancelButton();
+    this.modal.append(this.form.$el);
+  }
+  show() {
+    this.overlay.show();
+    this.modal.show();
+  }
+  hide() {
+    this.form.clearData();
+    this.overlay.hide();
+    this.modal.hide();
+  }
+  buildCancelButton() {
+    const cancelButton = $('<input type="button" value="Cancel" class="button"></input>');
+    cancelButton.on('click', (event) => {
+      event.preventDefault();
+      this.hide();
+    });
+    this.form.$el.append(cancelButton);
+  }
+}
 
 // ======================
 // OK GO!!!!!
@@ -157,4 +199,6 @@ $(document).ready( () => {
     },
     error: genericBackboneErrorHandler
   });
+
+  const addTripModal = new AddTripModal($('#add-trip'));
 });

@@ -48,6 +48,40 @@ form .input-container input {
 }
 
 
+/* Styles for the add-trip modal */
+main {
+  position: relative;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  z-index:50;
+}
+
+#add-trip {
+  display: none;
+  max-width: 70%;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: white;
+  border-radius: 2rem;
+  box-shadow: 10px 5px 5px black;
+  padding: 2rem;
+  z-index: 100;
+}
+
+
 /* Styles for error section at the top */
 #status-messages {
   background-color: #dfdfdf;

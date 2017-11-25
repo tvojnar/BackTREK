@@ -7,6 +7,7 @@ class ManagedForm {
   constructor(model, statusManager, options={}) {
     _.defaults(options, {
       submitText: 'Submit',
+      successText: 'Successfully saved',
       formClass: '',
       formId: '',
     });
@@ -74,7 +75,7 @@ class ManagedForm {
   }
 
   getInputElement(name) {
-    return this.$el.find(`input[name="${ name }"]`);
+    return this.$el.find(`.form-input[name="${ name }"]`);
   }
 
   readData() {

@@ -16,7 +16,15 @@ const Reservation = Backbone.Model.extend({
   ],
 
   urlRoot: function() {
-    return `http://localhost:3000/trips/${ this.get('tripId') }/reservations`;
+    const tripId = this.get('tripId');
+    if (isNaN(tripId)) {
+      throw 'Cannot make a reservation w/o trip ID';
+    }
+    return `http://localhost:3000/trips/${ tripId }/reservations`;
+  },
+
+  validate: function() {
+
   }
 });
 
