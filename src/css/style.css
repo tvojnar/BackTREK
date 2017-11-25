@@ -14,3 +14,33 @@ https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-
   /* Start hidden */
   display: none;
 }
+
+/* Styles for error section at the top */
+#status-messages {
+  background-color: #dfdfdf;
+
+  /* Hide by default */
+  display: none;
+}
+
+#status-messages ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
+
+#status-messages .error {
+  color: red;
+}
+
+#status-messages .success {
+  color: green;
+}

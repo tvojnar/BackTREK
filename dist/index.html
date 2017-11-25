@@ -12,6 +12,15 @@
   </header>
 
   <main>
+    <section id="status-messages" class="columns small-12">
+      <button class="clear float-right">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button>
+
+      <ul>
+      </ul>
+    </section>
+
     <section id="trip-table" class="columns small-12 medium-7">
       <form class="filter">
         <select name="filter-field" class="columns large-3">
@@ -22,11 +31,14 @@
           <input type="text" name="filter-value"></input>
         </div>
       </form>
-      <table>
+      <table id="trip-table">
         <thead>
           <tr>
           </tr>
         </thead>
+        <tbody>
+
+        </tbody>
       </table>
     </section>
 
@@ -36,6 +48,26 @@
 
   <footer>
   </footer>
+
+  <script type="text/template" id="trip-table-header-template">
+    <th class="sort <%- field %>"><%- field %></th>
+  </script>
+
+  <script type="text/template" id="trip-summary-template">
+    <tr>
+      <% fields.forEach((field) => { %>
+        <td>
+          <%- trip.get(field) %>
+        </td>
+      <% }); %>
+    </tr>
+  </script>
+
+  <script type="text/template" id="status-message-template">
+    <li class="<%- status %>">
+      <%- message %>
+    </li>
+  </script>
 
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
