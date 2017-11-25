@@ -69,29 +69,19 @@
   </script>
 
   <script type="text/template" id="trip-details-template">
-    <section class="info">
-      <h2><%- trip.get('name') %></h2>
-      <% ['category', 'continent', 'weeks', 'cost'].forEach((field) => { %>
-        <p><strong class="capitalize"><%- field %>:</strong> <%- trip.get(field) %></p>
-      <% }) %>
-      <p><%- trip.get('about') %></p>
-    </section>
+    <div>
+      <section class="info">
+        <h2><%- trip.get('name') %></h2>
+        <% ['category', 'continent', 'weeks', 'cost'].forEach((field) => { %>
+          <p><strong class="capitalize"><%- field %>:</strong> <%- trip.get(field) %></p>
+        <% }) %>
+        <p><%- trip.get('about') %></p>
+      </section>
 
-    <section class="register">
-      <h3>Reserve your spot today!</h3>
-      <!-- <form class="register">
-        <label for="name">Name</label>
-        <input type="text" name="name"></input>
-
-        <label for="age">Age</label>
-        <input type="number" name="age"></input>
-
-        <label for="email">Email</label>
-        <input type="text" name="email"></input>
-
-        <input type="submit" value="Reserve a spot" class="button"></input>
-      </form> -->
-    </section>
+      <section class="register">
+        <h3>Reserve your spot today!</h3>
+      </section>
+    </div>
   </script>
 
   <script type="text/template" id="status-message-template">
@@ -101,15 +91,14 @@
   </script>
 
   <script type="text/template" id="managed-form-template">
-    <form class="<%- class %>" id="<%- id %>">
+    <form class="<%- formClass %>" id="<%- formId %>">
       <% fields.forEach((field) => { %>
         <div class="input-container <%- field.name %>">
-          <label for="<%- field.name %>"><%- field %></label>
+          <label for="<%- field.name %>" class="capitalize"><%- field.name %></label>
           <input type="<%- field.type %>" name="<%- field.name %>"></input>
         </div>
-
-        <input type="submit" value="<%- submitText %>"></input>
       <% }); %>
+      <input type="submit" value="<%- submitText %>" class="button"></input>
     </form>
   </script>
 

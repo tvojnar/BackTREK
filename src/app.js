@@ -8,6 +8,12 @@ import './css/style.css';
 
 // Backbone Modules
 import TripCollection from 'collections/trip_collection';
+import Reservation from 'models/reservation';
+
+// "Views" (not quite views)
+import StatusManager from 'elements/status_manager';
+import ManagedForm from 'elements/managed_form';
+import TEMPLATES from 'elements/underscore_templates';
 
 // ======================
 // Global variables (sorry mom)
@@ -15,7 +21,11 @@ import TripCollection from 'collections/trip_collection';
 const TRIP_FIELDS = ['name', 'category', 'continent', 'weeks', 'cost'];
 const tripList = new TripCollection();
 let selectedTrip;
+let statusManager;
 
+// ======================
+// Random helper functions
+// ======================
 const selectTrip = function(trip) {
   if (selectedTrip) {
     selectedTrip.set('selected', false);
@@ -32,50 +42,12 @@ const genericBackboneErrorHandler = function(target, response) {
   if (response.readyState == 4) {
     console.log('Got regular type error');
     console.log(response);
-    reportStatus('error', response.responseText);
+    statusManager.report('error', response.responseText);
   } else {
     console.log('Request did not complete round-trip! Networking error?');
-    reportStatus('error', 'Could not connect to server');
+    statusManager.report('error', 'Could not connect to server');
   }
 }
-
-// ======================
-// Underscore template management
-// ======================
-const TEMPLATES = {
-  // Automatically find and compile all Underscore templates
-  // Why isn't this built into Underscore? I don't know.
-  compile() {
-    $('script[type="text/template"]').each((index, element) => {
-      // Dashes to camelCase - thanks SO
-      // https://stackoverflow.com/questions/6660977/convert-hyphens-to-camel-case-camelcase
-      let templateName = element.id.replace('-template', '')
-        .replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-      this[templateName] = _.template($(element).html());
-    });
-  }
-};
-
-// ======================
-// Global status messages
-// ======================
-const reportStatus = function(status, message) {
-  console.log(status);
-  console.log(message);
-  let generatedHTML = TEMPLATES.statusMessage({status: status, message: message});
-
-  console.log("In report status, generated html is");
-  console.log(generatedHTML);
-
-  $('#status-messages ul').append(generatedHTML);
-
-  $('#status-messages').show();
-};
-
-const clearStatus = function() {
-  $('#status-messages ul').html('');
-  $('#status-messages').hide();
-};
 
 // ======================
 // Trip table management
@@ -146,7 +118,10 @@ const renderTripDetails = function(trip, element) {
   }
 
   const generatedHTML = $(TEMPLATES.tripDetails({trip: trip}));
-  generatedHTML.find('.register').append(TEMPLATES.managedForm({ fields: trip.fields, submitText: 'Reserve'}));
+
+  const reservation = new Reservation({ tripId: trip.id });
+  const form = new ManagedForm(reservation, statusManager, { submitText: 'Reserve'} );
+  generatedHTML.find('.register').append(form.$el);
   $('#trip-details').html(generatedHTML);
   $('#trip-details').show();
 };
@@ -158,8 +133,10 @@ $(document).ready( () => {
   // Compile all templates
   TEMPLATES.compile();
 
+  statusManager = new StatusManager($('#status-messages'));
+
   // Register random one-off DOM event handlers
-  $('#status-messages button.clear').on('click', clearStatus);
+
   $('#trip-table tbody tr').on('click', renderTripDetails);
   $('#trip-table .filter input').on('keyup', filterTrips);
   $('#trip-table .filter-field').on('change', filterTrips);
