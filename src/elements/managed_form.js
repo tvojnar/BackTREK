@@ -36,29 +36,41 @@ class ManagedForm {
         this.collection.add(this.model);
       }
       this.model.save({}, {
-        error: (model, response) => {
-          console.log('Failed to save!');
-          if (this.collection) {
-            this.collection.remove(model);
-          }
-          if (response.readyState == 4) {
-            this.handleValidationFailure(response.responseJSON['errors']);
-          } else {
-            console.log('Something else happened - networking problem?');
-            this.statusManager.report('error', 'Could not connect to server. Check your network.');
-          }
-        },
-        success: (model, response) => {
-          console.log('Successfully saved!');
-          this.statusManager.report('success', `Successfully saved ${ model.name }`);
-          // TODO: Reset the model
-          // TODO: reset the form
-        }
+        error: this.errorHandler.bind(this),
+        success: this.successHandler.bind(this)
       });
     } else {
       // Client-side validation failure
       this.handleValidationFailure();
     }
+  }
+
+  successHandler(model, response) {
+    console.log('Successfully saved!');
+    this.statusManager.report('success', `Successfully saved ${ model.name }`);
+    this.resetModel();
+    this.clearData();
+  }
+
+  errorHandler(model, response) {
+    console.log('Failed to save!');
+    if (this.collection) {
+      this.collection.remove(model);
+    }
+    if (response.readyState == 4) {
+      this.handleValidationFailure(response.responseJSON['errors']);
+    } else {
+      console.log('Something else happened - networking problem?');
+      this.statusManager.report('error', 'Could not connect to server. Check your network.');
+    }
+  }
+
+  resetModel() {
+    // clone in case the model lives in a collection
+    this.model = this.model.clone();
+    this.model.formFields.forEach((field) => {
+      this.model.unset(field.name);
+    });
   }
 
   getInputElement(name) {
@@ -72,10 +84,31 @@ class ManagedForm {
     });
   }
 
+  clearData() {
+    this.model.formFields.forEach((field) => {
+      this.getInputElement(field.name).val('');
+    });
+    this.clearErrors();
+  }
+
+  clearErrors() {
+    this.$el.find('.input-container').removeClass('error');
+    this.$el.find('.error-message').remove();
+  }
+
   handleValidationFailure(errors=null) {
     errors = errors || this.model.validationError;
     console.log('Handling validation errors');
     console.log(errors);
+
+    this.clearErrors();
+
+    for (let field in errors) {
+      const container = this.$el.find(`.input-container.${ field }`);
+      container.addClass('error');
+      const errorElem = TEMPLATES.managedFormError({ problems: errors[field] });
+      container.find('label').append(errorElem);
+    }
   }
 }
 

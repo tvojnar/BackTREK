@@ -32,6 +32,21 @@ footer p {
 
 
 
+/* Styles for forms */
+form .input-container.error {
+  background-color: #FF9999;
+}
+
+form .input-container {
+  padding-left: .5rem;
+  padding-right: .5rem;
+  padding-bottom: .5rem;
+}
+
+form .input-container input {
+  margin: 0;
+}
+
 
 /* Styles for error section at the top */
 #status-messages {
