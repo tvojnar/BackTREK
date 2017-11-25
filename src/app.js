@@ -6,8 +6,16 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-console.log('it loaded!');
+const TRIP_FIELDS = ['name', 'category', 'continent', 'weeks', 'budget']
 
 $(document).ready( () => {
-  $('main').html('<h1>Hello World!</h1>');
+  // Populate table headers and filter fields
+  const headerRow = $('#trip-table thead tr');
+  const filterDropDown = $('#trip-table .filter select');
+  TRIP_FIELDS.forEach((field) => {
+    headerRow.append(`<th>${ field }</th>`);
+    filterDropDown.append(`<option value="${ field }">${ field }</option>`);
+  });
+
+
 });

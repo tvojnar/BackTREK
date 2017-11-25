@@ -1,2 +1,16 @@
+/*
+Lol wut you can do this in CSS? Thanks the internet.
+https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript?page=1&tab=active#tab-top
+*/
+#trip-table thead th {
+  text-transform: capitalize;
+}
 
-/* Your styles go here! */
+#trip-table .filter select {
+  text-transform: capitalize;
+}
+
+#trip-details {
+  /* Start hidden */
+  display: none;
+}
