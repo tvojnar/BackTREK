@@ -5,13 +5,13 @@
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body id="override-foundation">
   <header>
     <button id="add-trip-button" class="button float-right">Add a trip</button>
     <h1>BackTREK</h1>
   </header>
 
-  <main>
+  <main class="clearfix">
     <section id="status-messages" class="columns small-12">
       <button class="clear float-right">
         <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
@@ -23,7 +23,7 @@
 
     <section id="trip-table" class="columns small-12 medium-7">
       <form class="filter">
-        <select name="filter-field" class="columns large-3">
+        <select class="filter-field columns large-3 capitalize">
           <option disabled selected value>Filter by</option>
         </select>
 
@@ -42,19 +42,24 @@
       </table>
     </section>
 
-    <section id="trip-details" class="columns small-12 medium-5">
-    </section>
+    <article id="trip-details" class="columns small-12 medium-5">
+    </article>
   </main>
 
   <footer>
+    <p>
+      &copy; 2017,
+      <a href="https://adadevelopersacademy.org">Ada Developers Academy</a>.
+      License: <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA 3.0 US</a>
+    </p>
   </footer>
 
   <script type="text/template" id="trip-table-header-template">
-    <th class="sort <%- field %>"><%- field %></th>
+    <th class="sort <%- field %> capitalize"><%- field %></th>
   </script>
 
   <script type="text/template" id="trip-summary-template">
-    <tr>
+    <tr class="<%- trip.get('selected') ? 'selected' : '' %>">
       <% fields.forEach((field) => { %>
         <td>
           <%- trip.get(field) %>
@@ -63,11 +68,51 @@
     </tr>
   </script>
 
+  <script type="text/template" id="trip-details-template">
+    <section class="info">
+      <h2><%- trip.get('name') %></h2>
+      <% ['category', 'continent', 'weeks', 'cost'].forEach((field) => { %>
+        <p><strong class="capitalize"><%- field %>:</strong> <%- trip.get(field) %></p>
+      <% }) %>
+      <p><%- trip.get('about') %></p>
+    </section>
+
+    <section class="register">
+      <h3>Reserve your spot today!</h3>
+      <!-- <form class="register">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="age">Age</label>
+        <input type="number" name="age"></input>
+
+        <label for="email">Email</label>
+        <input type="text" name="email"></input>
+
+        <input type="submit" value="Reserve a spot" class="button"></input>
+      </form> -->
+    </section>
+  </script>
+
   <script type="text/template" id="status-message-template">
     <li class="<%- status %>">
       <%- message %>
     </li>
   </script>
+
+  <script type="text/template" id="managed-form-template">
+    <form class="<%- class %>" id="<%- id %>">
+      <% fields.forEach((field) => { %>
+        <div class="input-container <%- field.name %>">
+          <label for="<%- field.name %>"><%- field %></label>
+          <input type="<%- field.type %>" name="<%- field.name %>"></input>
+        </div>
+
+        <input type="submit" value="<%- submitText %>"></input>
+      <% }); %>
+    </form>
+  </script>
+
 
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>

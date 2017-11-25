@@ -1,19 +1,37 @@
+/* Generic styles */
 /*
 Lol wut you can do this in CSS? Thanks the internet.
 https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript?page=1&tab=active#tab-top
 */
-#trip-table thead th {
+.capitalize {
   text-transform: capitalize;
 }
 
-#trip-table .filter select {
-  text-transform: capitalize;
+footer p {
+  text-align: center;
 }
 
+
+
+/* Styles for the trip table */
+#override-foundation .selected {
+  background-color: grey;
+  color: white;
+}
+
+
+
+
+
+
+/* Styles for trip details */
 #trip-details {
   /* Start hidden */
   display: none;
 }
+
+
+
 
 /* Styles for error section at the top */
 #status-messages {
