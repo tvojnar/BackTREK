@@ -53,6 +53,7 @@ const genericBackboneErrorHandler = function(target, response) {
 // ======================
 // Trip table management
 // ======================
+// TODO DPR: Move these three functions to a separate file
 const buildTripTable = function() {
   // Populate table headers and filter fields
   const headerRow = $('#trip-table thead tr');
@@ -133,6 +134,7 @@ const renderTripDetails = function(trip, element) {
 // ======================
 // Add Trip Modal
 // ======================
+// TODO DPR: maybe this should inherit from ManagedForm?
 class AddTripModal {
   constructor(modal) {
     this.overlay = $('#overlay');

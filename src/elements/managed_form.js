@@ -14,6 +14,7 @@ class ManagedForm {
     this.model = model;
     this.collection = options.collection;
     this.statusManager = statusManager;
+    this.options = options;
 
     options.fields = this.model.formFields;
     this.el = TEMPLATES.managedForm(options);
@@ -48,7 +49,7 @@ class ManagedForm {
 
   successHandler(model, response) {
     console.log('Successfully saved!');
-    this.statusManager.report('success', `Successfully saved ${ model.name }`);
+    this.statusManager.report('success', this.options.successText);
     this.resetModel();
     this.clearData();
   }

@@ -23,8 +23,24 @@ const Reservation = Backbone.Model.extend({
     return `http://localhost:3000/trips/${ tripId }/reservations`;
   },
 
-  validate: function() {
+  validate: function(attributes) {
+    const errors = {};
 
+    if (!attributes.name) {
+      errors.name = ['can\'t be blank'];
+    }
+
+    if (!attributes.email) {
+      errors.email = ['can\'t be blank'];
+    }
+
+    // Return false if it's valid,
+    // or something truthy (i.e. the errors) if it's not valid
+    if (Object.keys(errors).length > 0) {
+      return errors;
+    } else {
+      return false;
+    }
   }
 });
 

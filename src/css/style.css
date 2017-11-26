@@ -88,6 +88,11 @@ main {
 
   /* Hide by default */
   display: none;
+
+  border-radius: 1rem;
+  margin: 1rem;
+  height: 100%;
+  padding: .8rem;
 }
 
 #status-messages ul {

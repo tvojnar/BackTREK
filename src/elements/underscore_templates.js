@@ -20,7 +20,7 @@ const TEMPLATES = {
   }
 };
 
-// Since this is linked from app.js, this code SHOULD be bound
+// Since this is linked from app.js, this code is bound
 // first, which means the handler will be run first
 $(document).ready(() => {
   TEMPLATES.compile();
