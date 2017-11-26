@@ -1,0 +1,12 @@
+# BackTREK
+Congratulations! You're submitting your assignment!
+
+## Comprehension Questions
+| Question       | Answer         |
+| :------------- | :------------- |
+| What role does the Model play in Backbone? |  |
+| How did the presence of Models and Collections change the way you thought about your app? | |
+| How do Backbone Events compare to DOM events? |  |
+| How did you approach filtering? What was your data flow for this feature? | |
+| What do you think of Backbone in comparison to raw JavaScript & jQuery?   |  |
+| Do you have any recommendations on how we could improve this project for the next cohort? |  |
