@@ -8,8 +8,6 @@ This is an individual, [stage 2](https://github.com/Ada-Developers-Academy/pedag
 
 We'll be reusing the [TREK travel API](https://trektravel.herokuapp.com/trips), [documented here](https://github.com/AdaGold/trip_api). The core purpose of the website will be the same, but we'll use Backbone to better organize our code and to provide all sorts of extra functionality.
 
-You can see a live version of the site implementing the optional wireframes below at https://backtrek.herokuapp.com/
-
 ## Learning Goals
 
 - Generate HTML using Underscore templates
