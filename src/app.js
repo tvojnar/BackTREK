@@ -33,14 +33,23 @@ const render = function render(tripList) {
   }) // forEach
 } // render
 
+// function to show all the trips when the 'Explore our trips' button is clicked
+const showAllTrips = function showAllTrips() {
+  // get all the trips from the API
+  // fetch will cause the update event to be triggered
+  tripList.fetch();
+  // Hide the button
+  $(this).hide();
+}
 
 $(document).ready(() => {
     // make the underscore function to list all the trips
     console.log('in .ready!');
     allTripsTemplate = _.template($('#display-trips').html());
 
-    // get the trips from the api. This will cause the update event to be triggered
-    tripList.fetch();
+    // get the trips from the api when the user clicks the 'Explore our trips!'.
+    $('#get-trips').on('click', showAllTrips)
+
 
     // when we update tripList we will rerender the page
     tripList.on('update', render)
