@@ -13,10 +13,37 @@
     <section id="start-background">
       <button id="get-trips" class="button">Explore our trips!</button>
     </section>
-  </main>
-  <footer>
 
-  </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
+    <table>
+      <thead>
+        <th class="sort name">Name</th>
+        <th class="sort continent">Continent</th>
+        <th class="sort category">Category</th>
+        <th class="sort weeks">Weeks</th>
+        <th class="sort cost">Cost</th>
+        <th class=" sort trip-id">Trip Id</th>
+      </thead>
+      <tbody id="trip-list">
+      </tbody>
+    </tbody>
+  </table>
+
+</main>
+<footer>
+
+</footer>
+<script src="app.bundle.js" type="text/javascript"></script>
+
+<script type="text/template" id="display-trips">
+  <tr class="trip">
+    <td><%- name %></td>
+    <td><%- continent %></td>
+    <td><%- category %></td>
+    <td><%- weeks %></td>
+    <td><%- cost %></td>
+    <td><%- id %></td>
+  </tr>
+</script>
+
 </body>
 </html>
