@@ -6,7 +6,9 @@ For this project we'll be returning to the TREK API, using Backbone to build an 
 
 This is an individual, [stage 2](https://github.com/Ada-Developers-Academy/pedagogy/blob/master/rule-of-three.md#stage-2) project.
 
-We'll be reusing the [TREK travel API](https://trektravel.herokuapp.com/trips), [documented here](https://github.com/AdaGold/trip_api). The core purpose of the website will be the same, but we'll use Backbone to better organize our code and to provide all sorts of extra functionality.
+We'll be reusing the [TREK travel API](https://ada-backtrek-api.herokuapp.com/trips), [documented here](https://github.com/AdaGold/trip_api). The core purpose of the website will be the same, but we'll use Backbone to better organize our code and to provide all sorts of extra functionality.
+
+**NOTE THAT THE URL FOR THE TREK API HAS CHANGED** It is now at https://ada-backtrek-api.herokuapp.com, though all the endpoints are the same.
 
 ## Learning Goals
 
