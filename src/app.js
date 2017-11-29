@@ -13,8 +13,9 @@ import TripList from 'app/collections/trip_list';
 // create the tripList to store the trips we access from the API
 const tripList = new TripList();
 
-// define the allTripsTemplate at a global level so we can access it in the render function
+// define the underscore templates at a global level so we can access it in the render function and other functions
 let allTripsTemplate;
+let tripDetailsTemplate;
 
 // define a render function to call when tripList is updated or sorted
 const render = function render(tripList) {
@@ -44,7 +45,14 @@ const render = function render(tripList) {
     let trip = tripList.get(tripId)
     trip.fetch({
       success: function(model) {
-        // console.log(`in the fetch and about is: ${model.get('about')}`);
+        // QUESTION: Why can't I access the attributes like this? .get('about') works, so I know the attributes were updated and can be accessed....
+        console.log(`in fetch and attributes are: ${model.attributes}`);
+
+        console.log(`in fetch and about is: ${model.get('about')}`);
+
+        let detailsHTML = tripDetailsTemplate(model.attattributes)
+        console.log(detailsHTML);
+
       } // function
     }); // fetch
   })
@@ -68,8 +76,10 @@ const showTripDetails = function showTripDetails() {
 
 $(document).ready(() => {
     // make the underscore function to list all the trips
-    console.log('in .ready!');
     allTripsTemplate = _.template($('#display-trips').html());
+
+    // underscore function to display the trip details
+    tripDetailsTemplate = _.template($('#trip-details-template').html());
 
     // get the trips from the api when the user clicks the 'Explore our trips!'.
     $('#get-trips').on('click', showAllTrips)
