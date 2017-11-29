@@ -17,6 +17,13 @@ const tripList = new TripList();
 let allTripsTemplate;
 let tripDetailsTemplate;
 
+// function to hide the trip details
+const hideDetails = function hideDetails() {
+  $('#trip-details').empty();
+  $('#trip-table').removeClass("large-5 column")
+  $('#trip-details').removeClass("large-5 column");
+}
+
 // define a render function to call when tripList is updated or sorted
 const render = function render(tripList) {
   // select the tbody element to append to
@@ -33,6 +40,7 @@ const render = function render(tripList) {
     tripListElement.append($(tripHTML));
   }) // forEach
 
+  // QUESTION: should this be in render? it doesn't work in .ready, but render feels like a weird place for it to be....
   // click event to get the details for a trip
   $('.trip').on('click', function(event) {
     console.log('in the trip click');
@@ -57,6 +65,11 @@ const render = function render(tripList) {
         $('#trip-details').addClass("large-5 column");
         $('#trip-details').empty();
         $('#trip-details').prepend(detailsHTML);
+
+        // TODO: add an error function!
+
+        // I need to define the click function for hide-trip details within the function that generates the html for the button
+        $('#hide-details').on('click', hideDetails)
 
       } // function
     }); // fetch
