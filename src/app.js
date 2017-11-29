@@ -45,13 +45,17 @@ const render = function render(tripList) {
     let trip = tripList.get(tripId)
     trip.fetch({
       success: function(model) {
-        // QUESTION: Why can't I access the attributes like this? .get('about') works, so I know the attributes were updated and can be accessed....
-        console.log(`in fetch and attributes are: ${model.attributes}`);
 
-        console.log(`in fetch and about is: ${model.get('about')}`);
+        console.log(model.attributes);
 
-        let detailsHTML = tripDetailsTemplate(model.attattributes)
+        // generate the HTML for the trip details
+        let detailsHTML = tripDetailsTemplate(model.attributes)
         console.log(detailsHTML);
+
+        // prepend the trip detail inside the trip-details article. Need to change classes as well to make foundation styling work
+        $('#trip-table').addClass("large-5 column")
+        $('#trip-details').addClass("large-5 column");
+        $('#trip-details').prepend(detailsHTML);
 
       } // function
     }); // fetch
