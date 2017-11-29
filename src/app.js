@@ -55,6 +55,7 @@ const render = function render(tripList) {
         // prepend the trip detail inside the trip-details article. Need to change classes as well to make foundation styling work
         $('#trip-table').addClass("large-5 column")
         $('#trip-details').addClass("large-5 column");
+        $('#trip-details').empty();
         $('#trip-details').prepend(detailsHTML);
 
       } // function
