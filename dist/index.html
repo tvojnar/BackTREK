@@ -14,19 +14,26 @@
       <button id="get-trips" class="button">Explore our trips!</button>
     </section>
 
-    <table>
-      <thead>
-        <th class="sort name">Name</th>
-        <th class="sort continent">Continent</th>
-        <th class="sort category">Category</th>
-        <th class="sort weeks">Weeks</th>
-        <th class="sort cost">Cost</th>
-        <th class=" sort trip-id">Trip Id</th>
-      </thead>
-      <tbody id="trip-list">
+    <section id="main-page" class="row">
+      <table>
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+          <th class=" sort trip-id">Trip Id</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
       </tbody>
-    </tbody>
-  </table>
+    </table>
+    <article id="trip-details">
+      <div>
+
+      </div>
+    </article>
+  </section>
 
 </main>
 <footer>
@@ -35,13 +42,12 @@
 <script src="app.bundle.js" type="text/javascript"></script>
 
 <script type="text/template" id="display-trips">
-  <tr class="trip">
+  <tr class="trip" data-id="<%- id %>">
     <td><%- name %></td>
     <td><%- continent %></td>
     <td><%- category %></td>
     <td><%- weeks %></td>
     <td><%- cost %></td>
-    <td><%- id %></td>
   </tr>
 </script>
 
