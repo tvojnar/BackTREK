@@ -17,6 +17,41 @@ const tripList = new TripList();
 let allTripsTemplate;
 let tripDetailsTemplate;
 
+// function to show trip details
+const renderDetails = (trip) => {
+  console.log('in the renderDetails function');
+
+  // get the id of the trip you clicked on
+  let tripId = trip.get('id')
+
+  // fetch the trip details of the trip you clicked on from the api
+  // the new attributes fetch sets for the model need to be access in a callback function
+  let currentTrip = tripList.get(tripId)
+
+  currentTrip.fetch({
+    success: function(model) {
+
+      console.log(model.attributes);
+
+      // generate the HTML for the trip details
+      let detailsHTML = tripDetailsTemplate(model.attributes)
+      console.log(detailsHTML);
+
+      // prepend the trip detail inside the trip-details article. Need to change classes as well to make foundation styling work
+      $('#trip-table').addClass("large-5 column")
+      $('#trip-details').addClass("large-5 column");
+      $('#trip-details').empty();
+      $('#trip-details').prepend(detailsHTML);
+
+      // TODO: add an error function!
+
+      // I need to define the click function for hide-trip details within the function that generates the html for the button
+      $('#hide-details').on('click', hideDetails)
+
+    } // function
+  }); // fetch
+}
+
 // function to hide the trip details
 const hideDetails = function hideDetails() {
   $('#trip-details').empty();
@@ -35,45 +70,16 @@ const render = function render(tripList) {
   // make a tr for each trip
   tripList.forEach((trip) => {
     // use the underscore function to generate HTML for each trip
-    let tripHTML = allTripsTemplate(trip.attributes);
+    let tripHTML = $(allTripsTemplate(trip.attributes));
+
+    // add an event handler to each tr as it is created
+    tripHTML.on('click', (event) => {
+      renderDetails(trip);
+    }) // tripHTML.on
+
     // append the tr with HTML for each trip to the tbody
     tripListElement.append($(tripHTML));
   }) // forEach
-
-  // QUESTION: should this be in render? it doesn't work in .ready, but render feels like a weird place for it to be....
-  // click event to get the details for a trip
-  $('.trip').on('click', function(event) {
-    console.log('in the trip click');
-
-    // get the id of the trip you clicked on
-    let tripId = $(this).attr('data-id')
-
-    // fetch the trip details of the trip you clicked on from the api
-    // the new attributes fetch sets for the model need to be access in a callback function
-    let trip = tripList.get(tripId)
-    trip.fetch({
-      success: function(model) {
-
-        console.log(model.attributes);
-
-        // generate the HTML for the trip details
-        let detailsHTML = tripDetailsTemplate(model.attributes)
-        console.log(detailsHTML);
-
-        // prepend the trip detail inside the trip-details article. Need to change classes as well to make foundation styling work
-        $('#trip-table').addClass("large-5 column")
-        $('#trip-details').addClass("large-5 column");
-        $('#trip-details').empty();
-        $('#trip-details').prepend(detailsHTML);
-
-        // TODO: add an error function!
-
-        // I need to define the click function for hide-trip details within the function that generates the html for the button
-        $('#hide-details').on('click', hideDetails)
-
-      } // function
-    }); // fetch
-  })
 } // render
 
 // function to show all the trips when the 'Explore our trips' button is clicked
@@ -83,7 +89,7 @@ const showAllTrips = function showAllTrips() {
   tripList.fetch();
   // Hide the button
   $(this).hide();
-}
+} // showAllTrips
 
 // function to show the trip details when a tr is clicked on
 const showTripDetails = function showTripDetails() {
