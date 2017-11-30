@@ -209,7 +209,7 @@ $(document).ready(() => {
   // keeping this all in the .ready for now so it is easier to refactor to add a modal later
   $('#add-trip').on('click', () => {
     let formHTML = tripFormTemplate();
-    $('main').prepend(formHTML);
+    $('#place-for-form').append(formHTML);
 
     // make the form go away when you submit the form
     $('#add-trip-form').on('submit', addTripHandler)
