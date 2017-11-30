@@ -51,7 +51,7 @@ const reserveTrip = (event) => {
   reservation.save({}, {
     success: (model, response) => {
       console.log('successfully saved the reservation');
-      reportStatus('success', 'You are reserved for the trip!')
+      reportStatus('success', 'You are reserved for the trip!', 'top')
     }, // success
     error: (model, response) => {
       console.log('Failed to reserve the trip! Server response:');
@@ -185,7 +185,7 @@ let readFormData = function readFormData() {
 const handleValidationErrors = function handleValidationErrors(errors) {
   for (let field in errors) {
     for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
+      reportStatus('error', `${field}: ${problem}`, 'top');
     }
   }
 } // handleValidationErrors
@@ -211,7 +211,7 @@ const addTripHandler = function(event) {
       tripList.add(trip);
       console.log('The trip was saved!');
       console.log(`I can access the trip $(tripList.get(trip))`);
-      reportStatus('success', 'Successfully saved trip!');
+      reportStatus('success', 'Successfully saved trip!', 'top');
       $('#add-trip-form').remove();
       $('#add-trip').show();
     }, // success
@@ -234,7 +234,7 @@ const clearStatus = function clearStatus() {
 } // clear status
 
 // funtion to report statuses
-const reportStatus = function reportStatus(status, message) {
+const reportStatus = function reportStatus(status, message, appendTo) {
   console.log(`reporting ${ status } status: ${ message }`);
 
   // make an object to pass to the template method
@@ -242,10 +242,11 @@ const reportStatus = function reportStatus(status, message) {
 
   // template method generates the li html for each message
   const statusHTML = statusTemplate(statusMessage);
-
-  // note the symetry with clearStatus()
-  $('#status-messages ul').append(statusHTML);
-  $('#status-messages').show();
+  if (appendTo === 'top') {
+    // note the symetry with clearStatus()
+    $('#status-messages ul').append(statusHTML);
+    $('#status-messages').show();
+  } // if
 } // reportStatus
 
 $(document).ready(() => {
@@ -287,5 +288,5 @@ $(document).ready(() => {
   }) // add-trip.on
 
   // click event to clear status messages
-   $('#status-messages button.clear').on('click', clearStatus);
+  $('#status-messages button.clear').on('click', clearStatus);
 }); // .ready
