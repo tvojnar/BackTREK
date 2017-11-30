@@ -145,6 +145,7 @@ const handleValidationErrors = function handleValidationErrors(errors) {
 const addTripHandler = function(event) {
   event.preventDefault();
 
+
   const trip = new Trip(readFormData());
 
   console.log(`trip data:`);
@@ -155,11 +156,12 @@ const addTripHandler = function(event) {
     handleValidationErrors(trip.validationError);
     return;
   }
-  tripList.add(trip);
 
   trip.save({}, {
     success: (model, response) => {
+      tripList.add(trip);
       console.log('The trip was saved!');
+      console.log(`I can access the trip $(tripList.get(trip))`);
       reportStatus('success', 'Successfully saved trip!');
       $('#add-trip-form').remove();
     }, // success
@@ -168,7 +170,7 @@ const addTripHandler = function(event) {
       console.log(response);
 
       // remove the trip if it was not saved
-      tripList.remove(model);
+      // tripList.remove(model);
 
       handleValidationErrors(response.responseJSON["errors"]);
     },
