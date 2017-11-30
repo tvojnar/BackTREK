@@ -8,30 +8,40 @@
 <body>
   <header>
     <h1>BackTREK</h1>
+    <button id="add-trip" class="button">Add a trip</button>
   </header>
   <main>
-    <section id="start-background">
-      <button id="get-trips" class="button">Explore our trips!</button>
-    </section>
+    <section id="status-messages">
+    <!-- <button class="clear float-right">
+      <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+    </button> -->
 
-    <section id="main-page" class="row">
-      <table id="trip-table">
-        <thead>
-          <th class="sort name">Name</th>
-          <th class="sort continent">Continent</th>
-          <th class="sort category">Category</th>
-          <th class="sort weeks">Weeks</th>
-          <th class="sort cost">Cost</th>
-        </thead>
-        <tbody id="trip-list">
-        </tbody>
-      </tbody>
-    </table>
-    <article id="trip-details">
-      <div id="book-trip">
-      </div>
-    </article>
+    <ul>
+    </ul>
   </section>
+
+  <section id="start-background">
+    <button id="get-trips" class="button">Explore our trips!</button>
+  </section>
+
+  <section id="main-page" class="row">
+    <table id="trip-table">
+      <thead>
+        <th class="sort name">Name</th>
+        <th class="sort continent">Continent</th>
+        <th class="sort category">Category</th>
+        <th class="sort weeks">Weeks</th>
+        <th class="sort cost">Cost</th>
+      </thead>
+      <tbody id="trip-list">
+      </tbody>
+    </tbody>
+  </table>
+  <article id="trip-details">
+    <div id="book-trip">
+    </div>
+  </article>
+</section>
 
 </main>
 <footer>
@@ -60,6 +70,30 @@
     <li>Cost: <%- cost %></li>
   </ul>
   <p> <%- about %> </p>
+</script>
+
+<script type="text/template" id="trip-form-template">
+  <form id="add-trip-form">
+    <label for="name">Name</label>
+    <input type="text" name="name"></input>
+
+    <label for="continent">Continent</label>
+    <input type="text" name="continent"></input>
+
+    <label for="category">Category</label>
+    <input type="text" name="category"></input>
+
+    <label for="weeks">Number of weeks</label>
+    <input type="text" name="weeks"></input>
+
+    <label for="cost">Cost</label>
+    <input type="text" name="cost"></input>
+
+    <label for="about">Description</label>
+    <input type="text" name="about"></input>
+
+    <input type="submit" value="Add trip!" class="button submit-trip"></input>
+  </form>
 </script>
 
 </body>
