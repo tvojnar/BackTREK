@@ -51,7 +51,7 @@ const reserveTrip = (event) => {
   reservation.save({}, {
     success: (model, response) => {
       console.log('successfully saved the reservation');
-      reportStatus('success', 'You are reserved for the trip!', 'top')
+      reportStatus('success', 'You are reserved for the trip!')
     }, // success
     error: (model, response) => {
       console.log('Failed to reserve the trip! Server response:');
@@ -185,7 +185,7 @@ let readFormData = function readFormData() {
 const handleValidationErrors = function handleValidationErrors(errors) {
   for (let field in errors) {
     for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`, 'top');
+      reportStatus('error', `${field}: ${problem}`);
     }
   }
 } // handleValidationErrors
@@ -211,7 +211,7 @@ const addTripHandler = function(event) {
       tripList.add(trip);
       console.log('The trip was saved!');
       console.log(`I can access the trip $(tripList.get(trip))`);
-      reportStatus('success', 'Successfully saved trip!', 'top');
+      reportStatus('success', 'Successfully saved trip!');
       $('#add-trip-form').remove();
       $('#add-trip').show();
     }, // success
@@ -234,7 +234,7 @@ const clearStatus = function clearStatus() {
 } // clear status
 
 // funtion to report statuses
-const reportStatus = function reportStatus(status, message, appendTo) {
+const reportStatus = function reportStatus(status, message) {
   console.log(`reporting ${ status } status: ${ message }`);
 
   // make an object to pass to the template method
@@ -242,11 +242,11 @@ const reportStatus = function reportStatus(status, message, appendTo) {
 
   // template method generates the li html for each message
   const statusHTML = statusTemplate(statusMessage);
-  if (appendTo === 'top') {
-    // note the symetry with clearStatus()
-    $('#status-messages ul').append(statusHTML);
-    $('#status-messages').show();
-  } // if
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+
 } // reportStatus
 
 $(document).ready(() => {
