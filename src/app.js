@@ -29,23 +29,23 @@ const reserveTrip = (event) => {
 
   // QUESTION: can you manually set the url for the Reservation in here instead of in the model? then each Reservation would have their own url? Or can you define a url method in the model that will know to take the trip_id attribute from the model and put it into the url?
 
-  const RES_FIELDS = ['name', 'age', 'email'];
+  const RES_FIELDS = ['name', 'age', 'email', 'trip_id'];
   let resData = {}
 
   RES_FIELDS.forEach((field) => {
-    const resInputEl = $('#reservation-form input[name="${field}"]');
+    const input = $(`#reservation-form input[name="${ field }"]`);
+    const val = input.val();
 
-    const resValue = resInputEl.val();
+    if (val != '') {
+      resData[field] = val;
+    }
 
-    if (resValue != '') {
-      resData[field] = resValue
-    } // if
-
-    // QUESTION: Do I need to clear out resValue too?
-    resInputEl.val('')//
+    input.val('');
   }) // forEach
 
   const reservation = new Reservation(resData);
+  console.log(`reservation`);
+  console.log(reservation);
 
   reservation.save({}, {
     success: (model, response) => {
