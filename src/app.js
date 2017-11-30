@@ -149,6 +149,7 @@ const addTripHandler = function(event) {
     success: (model, response) => {
       console.log('The trip was saved!');
       reportStatus('success', 'Successfully saved trip!');
+      $('#add-trip-form').remove();
     }, // success
     error: (model, response) => {
       console.log('failed to save the trip. Server response:');
@@ -164,16 +165,16 @@ const addTripHandler = function(event) {
 } // addTripHandler
 
 // funtion to report statuses
-// const reportStatus = function reportStatus(status, message) {
-//   console.log(`reporting ${ status } status: ${ message }`);
-//
-//   // Should probably use an Underscore template here.
-//   const statusHTML = `<li class="${ status }">${ message }</li>`;
-//
-//   // note the symetry with clearStatus()
-//   $('#status-messages ul').append(statusHTML);
-//   $('#status-messages').show();
-// } // reportStatus
+const reportStatus = function reportStatus(status, message) {
+  console.log(`reporting ${ status } status: ${ message }`);
+
+  // Should probably use an Underscore template here.
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+} // reportStatus
 
 $(document).ready(() => {
   // make the underscore function to list all the trips
