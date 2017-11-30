@@ -20,6 +20,7 @@ const tripList = new TripList();
 let allTripsTemplate;
 let tripDetailsTemplate;
 let tripFormTemplate;
+let statusTemplate;
 
 // function to reserve a trip
 const reserveTrip = (event) => {
@@ -230,8 +231,11 @@ const addTripHandler = function(event) {
 const reportStatus = function reportStatus(status, message) {
   console.log(`reporting ${ status } status: ${ message }`);
 
-  // Should probably use an Underscore template here.
-  const statusHTML = `<li class="${ status }">${ message }</li>`;
+  // make an object to pass to the template method
+  let statusMessage = {status: status, message: message}
+
+  // template method generates the li html for each message 
+  const statusHTML = statusTemplate(statusMessage);
 
   // note the symetry with clearStatus()
   $('#status-messages ul').append(statusHTML);
@@ -247,6 +251,10 @@ $(document).ready(() => {
 
   // underscore function to get form to make a new trip
   tripFormTemplate = _.template($('#trip-form-template').html());
+
+
+  // underscore template to show status messages
+  statusTemplate = _.template($('#status-message-template').html());
 
   // get the trips from the api when the user clicks the 'Explore our trips!'.
   $('#get-trips').on('click', showAllTrips)
