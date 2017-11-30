@@ -9,6 +9,7 @@ import './css/style.css';
 // collections and models
 import TripList from 'app/collections/trip_list';
 import Trip from 'app/models/trip';
+import Reservation from 'app/models/reservation';
 
 const TRIP_FIELDS = ['name', 'continent', 'category', 'about', 'weeks', 'cost']
 
@@ -21,10 +22,44 @@ let tripDetailsTemplate;
 let tripFormTemplate;
 
 // function to reserve a trip
-const reserveTrip = (trip) => {
-  trip.preventDefault();
-  alert('in reserveTrip!')
-}//
+const reserveTrip = (event) => {
+  event.preventDefault();
+  console.log('in reserveTrip');
+  // alert('in reserveTrip!')
+
+  // QUESTION: can you manually set the url for the Reservation in here instead of in the model? then each Reservation would have their own url? Or can you define a url method in the model that will know to take the trip_id attribute from the model and put it into the url?
+
+  const RES_FIELDS = ['name', 'age', 'email'];
+  let resData = {}
+
+  RES_FIELDS.forEach((field) => {
+    const resInputEl = $('#reservation-form input[name="${field}"]');
+
+    const resValue = resInputEl.val();
+
+    if (resValue != '') {
+      resData[field] = resValue
+    } // if
+
+    // QUESTION: Do I need to clear out resValue too?
+    resInputEl.val('')//
+  }) // forEach
+
+  const reservation = new Reservation(resData);
+
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('successfully saved the reservation');
+      reportStatus('success', 'You are reserved for the trip!')
+    }, // success
+    error: (model, response) => {
+      console.log('Failed to reserve the trip! Server response:');
+      console.log(response);
+
+      handleValidationFailures(response.responseJSON["errors"]);
+    }, // error
+  }) // save
+} // reserveTrip
 
 // funtion to generate the html for the trip details
 const renderDetailsHtml = (model) => {
