@@ -227,6 +227,12 @@ const addTripHandler = function(event) {
   }) // book.save
 } // addTripHandler
 
+// clear status messages when you click the x button
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+} // clear status
+
 // funtion to report statuses
 const reportStatus = function reportStatus(status, message) {
   console.log(`reporting ${ status } status: ${ message }`);
@@ -234,7 +240,7 @@ const reportStatus = function reportStatus(status, message) {
   // make an object to pass to the template method
   let statusMessage = {status: status, message: message}
 
-  // template method generates the li html for each message 
+  // template method generates the li html for each message
   const statusHTML = statusTemplate(statusMessage);
 
   // note the symetry with clearStatus()
@@ -279,4 +285,7 @@ $(document).ready(() => {
     // make the form go away when you submit the form
     $('#add-trip-form').on('submit', addTripHandler)
   }) // add-trip.on
+
+  // click event to clear status messages
+   $('#status-messages button.clear').on('click', clearStatus);
 }); // .ready
