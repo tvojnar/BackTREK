@@ -56,6 +56,7 @@ const reserveTrip = (event) => {
       console.log('Failed to reserve the trip! Server response:');
       console.log(response);
 
+      // QUESTION: why isn't handleValidationErrors defined in this scope?
       handleValidationFailures(response.responseJSON["errors"]);
     }, // error
   }) // save
