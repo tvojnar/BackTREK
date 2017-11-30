@@ -52,8 +52,11 @@ const renderDetails = (trip) => {
 
   // if we havn't already done an api call to updage the currentTrips attributes to have 'about' then do an api call, if not then just make the trip details from the attribute the currentTrip allready has access to!
   if (!currentTrip.get('about')) {
+    console.log('am i getting into the if?');
     currentTrip.fetch({
       success: function(model) {
+        console.log(model);
+        console.log(`about: ${model.get('about')}`);
         renderDetailsHtml(model);
       } // function
     }); // fetch

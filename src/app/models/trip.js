@@ -1,7 +1,9 @@
 import Backbone from 'backbone'
 
 const Trip = Backbone.Model.extend({
-  url: 'https://ada-backtrek-api.herokuapp.com/trips',
+  // NOTE: if I put this url is then the fetch() doesn't work to get the trip details, but it makes it so the 'update' action isn't run when I add a trip to tripList right before I save a new trip ... 
+  // url: 'https://ada-backtrek-api.herokuapp.com/trips',
+
   validate(attributes) {
     const errors = {};
 
