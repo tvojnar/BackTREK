@@ -132,6 +132,15 @@ let readFormData = function readFormData() {
 
 } // readFormData
 
+// function to display validation failure error message
+const handleValidationErrors = function handleValidationErrors(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+} // handleValidationErrors
+
 // function to add a trip
 const addTripHandler = function(event) {
   event.preventDefault();
@@ -159,9 +168,9 @@ const addTripHandler = function(event) {
       tripList.remove(model);
 
       // TODO: handle validations here
-    }
+      handleValidationErrors(response.responseJSON["errors"]);
+    },
   }) // book.save
-
 } // addTripHandler
 
 // funtion to report statuses
