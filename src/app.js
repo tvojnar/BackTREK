@@ -20,6 +20,12 @@ let allTripsTemplate;
 let tripDetailsTemplate;
 let tripFormTemplate;
 
+// function to reserve a trip
+const reserveTrip = (trip) => {
+  trip.preventDefault();
+  alert('in reserveTrip!')
+}//
+
 // funtion to generate the html for the trip details
 const renderDetailsHtml = (model) => {
   // generate the HTML for the trip details
@@ -36,6 +42,12 @@ const renderDetailsHtml = (model) => {
 
   // I need to define the click function for hide-trip details within the function that generates the html for the button
   $('#hide-details').on('click', hideDetails)
+
+  // add click event for the reservation form in this HTML
+  $('#reservation-form').on('submit', (event) => {
+    event.preventDefault();
+    reserveTrip(event);
+  });
 
 } // renderDetailsHtml
 
