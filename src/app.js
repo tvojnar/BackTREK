@@ -164,6 +164,7 @@ const addTripHandler = function(event) {
       console.log(`I can access the trip $(tripList.get(trip))`);
       reportStatus('success', 'Successfully saved trip!');
       $('#add-trip-form').remove();
+      $('#add-trip').show();
     }, // success
     error: (model, response) => {
       console.log('failed to save the trip. Server response:');
@@ -210,6 +211,7 @@ $(document).ready(() => {
   $('#add-trip').on('click', () => {
     let formHTML = tripFormTemplate();
     $('#place-for-form').append(formHTML);
+    $('#add-trip').hide();
 
     // make the form go away when you submit the form
     $('#add-trip-form').on('submit', addTripHandler)
