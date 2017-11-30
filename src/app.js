@@ -10,7 +10,7 @@ import './css/style.css';
 import TripList from 'app/collections/trip_list';
 import Trip from 'app/models/trip';
 
-const TRIP_FIELDS = ['name', 'continent', 'category', 'about', 'weeks', 'cost', ]
+const TRIP_FIELDS = ['name', 'continent', 'category', 'about', 'weeks', 'cost']
 
 // create the tripList to store the trips we access from the API
 const tripList = new TripList();
@@ -110,12 +110,13 @@ const showTripDetails = function showTripDetails() {
 } // showTripDetails
 
 // function to read the data from the add-trip-form
-const readFormData = function readFormData() {
-  const tripData = {};
+let readFormData = function readFormData() {
+  let tripData = {};
 
   TRIP_FIELDS.forEach((field) => {
-    const inputElement = $(`#add-trip-form input[name="${ field} "]`);
-    const value = inputElement.val();
+    let inputElement = $(`#add-trip-form input[name="${field}"]`);
+    let value = inputElement.val();
+    console.log(value);
 
     // don't allow empty strings
     if (value != '') {
@@ -126,8 +127,9 @@ const readFormData = function readFormData() {
     inputElement.val('');
   }) // forEach
   console.log("read the trip data");
-
+  console.log(tripData);
   return tripData;
+
 } // readFormData
 
 // function to add a trip
@@ -135,6 +137,9 @@ const addTripHandler = function(event) {
   event.preventDefault();
 
   const trip = new Trip(readFormData());
+
+  console.log(`trip data:`);
+  console.log(trip);
 
   // TODO: add validations here!
 
