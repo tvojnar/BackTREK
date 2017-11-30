@@ -51,7 +51,7 @@ const reserveTrip = (event) => {
   reservation.save({}, {
     success: (model, response) => {
       console.log('successfully saved the reservation');
-      reportStatus('success', 'You are reserved for the trip!')
+      reserveStatus('success', 'You are reserved for the trip!')
     }, // success
     error: (model, response) => {
       console.log('Failed to reserve the trip! Server response:');
@@ -233,7 +233,7 @@ const clearStatus = function clearStatus() {
   $('#status-messages').hide();
 } // clear status
 
-// funtion to report statuses
+// funtion to report statuses at the top of the page
 const reportStatus = function reportStatus(status, message) {
   console.log(`reporting ${ status } status: ${ message }`);
 
@@ -248,6 +248,17 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages').show();
 
 } // reportStatus
+
+// function to report status for the reserve trip form
+const reserveStatus = function reserveStatus(status, message) {
+  const statusObj = { status: status, message: message }
+
+  const resStatusHtml = statusTemplate(statusObj);
+
+  $('#form-status').append(resStatusHtml);
+} // reserveStatus
+
+
 
 $(document).ready(() => {
   // make the underscore function to list all the trips
