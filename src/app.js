@@ -213,6 +213,13 @@ $(document).ready(() => {
     $('#place-for-form').append(formHTML);
     $('#add-trip').hide();
 
+    // remove form when you hit the cancel button
+    $('#cancel').on('click', (event) => {
+      $('#add-trip-form').remove();
+      $('#cancel').remove();
+      $('#add-trip').show();
+    }) // cancel.on
+
     // make the form go away when you submit the form
     $('#add-trip-form').on('submit', addTripHandler)
   }) // add-trip.on
