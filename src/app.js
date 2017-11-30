@@ -6,9 +6,11 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-// collections
+// collections and models
 import TripList from 'app/collections/trip_list';
+import Trip from 'app/models/trip';
 
+const TRIP_FIELDS = ['name', 'continent', 'category', 'about', 'weeks', 'cost']
 
 // create the tripList to store the trips we access from the API
 const tripList = new TripList();
@@ -16,6 +18,8 @@ const tripList = new TripList();
 // define the underscore templates at a global level so we can access it in the render function and other functions
 let allTripsTemplate;
 let tripDetailsTemplate;
+let tripFormTemplate;
+
 // funtion to generate the html for the trip details
 const renderDetailsHtml = (model) => {
   // generate the HTML for the trip details
@@ -46,7 +50,7 @@ const renderDetails = (trip) => {
   // the new attributes fetch sets for the model need to be access in a callback function
   let currentTrip = tripList.get(tripId)
 
-  // if we havn't already done an api call to updage the currentTrips attributes to have 'about' then do an api call, if not then just make the trip details from the attribute the currentTrip allready has access to! 
+  // if we havn't already done an api call to updage the currentTrips attributes to have 'about' then do an api call, if not then just make the trip details from the attribute the currentTrip allready has access to!
   if (!currentTrip.get('about')) {
     currentTrip.fetch({
       success: function(model) {
@@ -105,6 +109,87 @@ const showTripDetails = function showTripDetails() {
   alert('in the showTripDetails function')
 } // showTripDetails
 
+// function to read the data from the add-trip-form
+let readFormData = function readFormData() {
+  let tripData = {};
+
+  TRIP_FIELDS.forEach((field) => {
+    let inputElement = $(`#add-trip-form input[name="${field}"]`);
+    let value = inputElement.val();
+    console.log(value);
+
+    // don't allow empty strings
+    if (value != '') {
+      tripData[field] = value;
+    } // if
+
+    // clear the inputElement
+    inputElement.val('');
+  }) // forEach
+  console.log("read the trip data");
+  console.log(tripData);
+  return tripData;
+
+} // readFormData
+
+// function to display validation failure error message
+const handleValidationErrors = function handleValidationErrors(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+} // handleValidationErrors
+
+// function to add a trip
+const addTripHandler = function(event) {
+  event.preventDefault();
+
+
+  const trip = new Trip(readFormData());
+
+  console.log(`trip data:`);
+  console.log(trip);
+
+  // break out of the function if the trip is not valid
+  if (!trip.isValid()) {
+    handleValidationErrors(trip.validationError);
+    return;
+  }
+
+  trip.save({}, {
+    success: (model, response) => {
+      tripList.add(trip);
+      console.log('The trip was saved!');
+      console.log(`I can access the trip $(tripList.get(trip))`);
+      reportStatus('success', 'Successfully saved trip!');
+      $('#add-trip-form').remove();
+      $('#add-trip').show();
+    }, // success
+    error: (model, response) => {
+      console.log('failed to save the trip. Server response:');
+      console.log(response);
+
+      // remove the trip if it was not saved
+      // tripList.remove(model);
+
+      handleValidationErrors(response.responseJSON["errors"]);
+    },
+  }) // book.save
+} // addTripHandler
+
+// funtion to report statuses
+const reportStatus = function reportStatus(status, message) {
+  console.log(`reporting ${ status } status: ${ message }`);
+
+  // Should probably use an Underscore template here.
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+} // reportStatus
+
 $(document).ready(() => {
   // make the underscore function to list all the trips
   allTripsTemplate = _.template($('#display-trips').html());
@@ -112,11 +197,30 @@ $(document).ready(() => {
   // underscore function to display the trip details
   tripDetailsTemplate = _.template($('#trip-details-template').html());
 
+  // underscore function to get form to make a new trip
+  tripFormTemplate = _.template($('#trip-form-template').html());
+
   // get the trips from the api when the user clicks the 'Explore our trips!'.
   $('#get-trips').on('click', showAllTrips)
 
   // when we update tripList we will rerender the page
   tripList.on('update', render)
 
+  // click event to add a trip
+  // keeping this all in the .ready for now so it is easier to refactor to add a modal later
+  $('#add-trip').on('click', () => {
+    let formHTML = tripFormTemplate();
+    $('#place-for-form').append(formHTML);
+    $('#add-trip').hide();
 
+    // remove form when you hit the cancel button
+    $('#cancel').on('click', (event) => {
+      $('#add-trip-form').remove();
+      $('#cancel').remove();
+      $('#add-trip').show();
+    }) // cancel.on
+
+    // make the form go away when you submit the form
+    $('#add-trip-form').on('submit', addTripHandler)
+  }) // add-trip.on
 }); // .ready
