@@ -150,8 +150,11 @@ const addTripHandler = function(event) {
   console.log(`trip data:`);
   console.log(trip);
 
-  // TODO: add validations here!
-
+  // break out of the function if the trip is not valid
+  if (!trip.isValid()) {
+    handleValidationErrors(trip.validationError);
+    return;
+  }
   tripList.add(trip);
 
   trip.save({}, {
@@ -167,7 +170,6 @@ const addTripHandler = function(event) {
       // remove the trip if it was not saved
       tripList.remove(model);
 
-      // TODO: handle validations here
       handleValidationErrors(response.responseJSON["errors"]);
     },
   }) // book.save
