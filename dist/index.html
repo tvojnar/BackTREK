@@ -38,8 +38,6 @@
     </tbody>
   </table>
   <article id="trip-details">
-    <div id="book-trip">
-    </div>
   </article>
 </section>
 
@@ -70,6 +68,22 @@
     <li>Cost: <%- cost %></li>
   </ul>
   <p> <%- about %> </p>
+
+  <form id="reservation-form">
+
+    <input type="hidden" id="trip_id" name="trip_id" value="<%- id %>">
+
+    <label for="name">Name</label>
+    <input type="text" name="name"></input>
+
+    <label for="age">Age</label>
+    <input type="text" name="age"></input>
+
+    <label for="email">Email</label>
+    <input type="text" name="email"></input>
+
+    <input type="submit" value="Book trip!" class="button"></input>
+  </form>
 </script>
 
 <script type="text/template" id="trip-form-template">
