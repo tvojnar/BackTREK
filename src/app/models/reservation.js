@@ -7,6 +7,13 @@ const Reservation = Backbone.Model.extend({
   urlRoot() {
     return `https://ada-backtrek-api.herokuapp.com/trips/${this.get('trip_id')}/reservations`
   }, // urlRoot
+  validate(attributes) {
+    const resErrors = {};
+
+    if (!attributes.name) {
+      resErrors.name = ['cannot be blank']
+    }
+  } // attributes
 });
 
 export default Reservation

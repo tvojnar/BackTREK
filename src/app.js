@@ -26,9 +26,6 @@ let statusTemplate;
 const reserveTrip = (event) => {
   event.preventDefault();
   console.log('in reserveTrip');
-  // alert('in reserveTrip!')
-
-  // QUESTION: can you manually set the url for the Reservation in here instead of in the model? then each Reservation would have their own url? Or can you define a url method in the model that will know to take the trip_id attribute from the model and put it into the url?
 
   const RES_FIELDS = ['name', 'age', 'email', 'trip_id'];
   let resData = {}
@@ -56,9 +53,10 @@ const reserveTrip = (event) => {
     error: (model, response) => {
       console.log('Failed to reserve the trip! Server response:');
       console.log(response);
+      console.log(response.responseJSON["errors"]);
 
-      // QUESTION: why isn't handleValidationErrors defined in this scope?
-      handleValidationFailures(response.responseJSON["errors"]);
+      // QUESTION: why isn't handleValidationErrors defined in this scope? Might work now
+      handleValidationErrors(response.responseJSON["errors"], 'form');
     }, // error
   }) // save
 } // reserveTrip
@@ -182,11 +180,17 @@ let readFormData = function readFormData() {
 } // readFormData
 
 // function to display validation failure error message
-const handleValidationErrors = function handleValidationErrors(errors) {
+const handleValidationErrors = function handleValidationErrors(errors, nextFunction) {
   for (let field in errors) {
-    for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
-    }
+    if (nextFunction === 'top') {
+      for (let problem of errors[field]) {
+        reportStatus('error', `${field}: ${problem}`);
+      } // for
+    } else if (nextFunction === 'form') {
+      for (let problem of errors[field]) {
+        reserveStatus('error', `${field}: ${problem}`);
+      } // for
+    }// if else if
   }
 } // handleValidationErrors
 
@@ -202,7 +206,7 @@ const addTripHandler = function(event) {
 
   // break out of the function if the trip is not valid
   if (!trip.isValid()) {
-    handleValidationErrors(trip.validationError);
+    handleValidationErrors(trip.validationError, 'top');
     return;
   }
 
@@ -222,7 +226,7 @@ const addTripHandler = function(event) {
       // remove the trip if it was not saved
       // tripList.remove(model);
 
-      handleValidationErrors(response.responseJSON["errors"]);
+      handleValidationErrors(response.responseJSON["resErrors"], 'top');
     },
   }) // book.save
 } // addTripHandler
