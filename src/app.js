@@ -21,6 +21,7 @@ let allTripsTemplate;
 let tripDetailsTemplate;
 let tripFormTemplate;
 let statusTemplate;
+let filterTemplate;
 
 // function to reserve a trip
 const reserveTrip = (event) => {
@@ -149,6 +150,10 @@ const render = function render(tripList) {
     // append the tr with HTML for each trip to the tbody
     tripListElement.append($(tripHTML));
   }) // forEach
+
+  // add the filter form to the DOM
+  let filterHTML = $(filterTemplate());
+  $('#main-page').prepend($(filterHTML));
 
   // remove the css styling for the previously sorted th
   $('th.sort').removeClass('current-sort-field');
@@ -304,9 +309,11 @@ $(document).ready(() => {
   // underscore function to get form to make a new trip
   tripFormTemplate = _.template($('#trip-form-template').html());
 
-
   // underscore template to show status messages
   statusTemplate = _.template($('#status-message-template').html());
+
+  // underscore template to display the filter form
+  filterTemplate = _.template($('#filter-trips-form-template').html());
 
   // get the trips from the api when the user clicks the 'Explore our trips!'.
   $('#get-trips').on('click', showAllTrips)
@@ -378,12 +385,12 @@ $(document).ready(() => {
   // click action for clear-filters button
   $('#clear-filter').on('click', (event) => {
     console.log('in clear-filter');
-      tripList.filterValues
-      for (const prop of Object.keys(tripList.filterValues)) {
-        delete tripList.filterValues[prop];
-      }  // for delete loop
+    tripList.filterValues
+    for (const prop of Object.keys(tripList.filterValues)) {
+      delete tripList.filterValues[prop];
+    }  // for delete loop
 
-      render(tripList);
+    render(tripList);
 
   }) // .on for clear-filter
 }); // .ready
