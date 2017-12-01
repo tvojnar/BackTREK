@@ -125,41 +125,6 @@ const hideDetails = function hideDetails() {
 }
 
 
-// // function that adds the filter form above the table and adds click events that enable filtering and clearing filters
-// const renderFilterForm = function renderFilterForm() {
-//
-//   console.log($('#clear-filter'));
-//
-//   // keydown event for trip-filter-form
-//   $('#trip-filter-form').on('keyup', () => {
-//     // pull out the input value from the form
-//     let input = event.target.value
-//     console.log(input);
-//     // pull out which option was selected in the form
-//     let option = $('#trip-filter-form option:selected').html();
-//     option = option.toLowerCase();
-//     console.log(option);
-//
-//     // set the filter in the filterValues property of the collection with the option as the key and the input as the value
-//     tripList.filterValues[option] = input;
-//
-//     // call render and render will make the tripList collection be filtered and will display the result of that filter
-//     render(tripList);
-//   }) // keyup
-//
-//   // click event to clear filters
-//   $('#clear-filter').on('click', (event) => {
-//     console.log('in clear-filter');
-//     tripList.filterValues
-//     for (const prop of Object.keys(tripList.filterValues)) {
-//       delete tripList.filterValues[prop];
-//     }  // for delete loop
-//
-//     render(tripList);
-//
-//   }) // .on for clear-filter
-// } //renderFilterForm
-
 // define a render function to call when tripList is updated or sorted
 const render = function render(tripList) {
   // select the tbody element to append to
@@ -186,15 +151,6 @@ const render = function render(tripList) {
     // append the tr with HTML for each trip to the tbody
     tripListElement.append($(tripHTML));
   }) // forEach
-
-
-  // // add the filter form to the DOM
-  // let filterHTML = $(filterTemplate());
-  // $('#main-page').prepend($(filterHTML));
-
-  // function that adds the filter form above the table and adds click events that enable filtering and clearing filters
-  // renderFilterForm();
-
 
   // remove the css styling for the previously sorted th
   $('th.sort').removeClass('current-sort-field');
@@ -353,8 +309,6 @@ $(document).ready(() => {
   // underscore template to show status messages
   statusTemplate = _.template($('#status-message-template').html());
 
-  // // underscore template to display the filter form
-  // filterTemplate = _.template($('#filter-trips-form-template').html());
 
   // get the trips from the api when the user clicks the 'Explore our trips!'.
   $('#get-trips').on('click', showAllTrips)
