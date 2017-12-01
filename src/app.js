@@ -131,8 +131,13 @@ const render = function render(tripList) {
   // empty the tbody before rendering
   tripListElement.empty();
 
-  // make a tr for each trip
-  tripList.forEach((trip) => {
+  console.log('tripList');
+  console.log(tripList);
+  // filter the trip list
+  let filteredTrips = tripList.filterData();
+
+  // make a tr for each trip in the filtered dataset of trips
+  filteredTrips.forEach((trip) => {
     // use the underscore function to generate HTML for each trip
     let tripHTML = $(allTripsTemplate(trip.attributes));
 
@@ -154,6 +159,7 @@ const render = function render(tripList) {
 
 // function to show all the trips when the 'Explore our trips' button is clicked
 const showAllTrips = function showAllTrips() {
+  console.log('in showAllTrips');
   // get all the trips from the API
   // fetch will cause the update event to be triggered
   tripList.fetch();
@@ -306,6 +312,7 @@ $(document).ready(() => {
   $('#get-trips').on('click', showAllTrips)
 
   // when we update tripList we will rerender the page
+  // QUESTION: why does this work when I'm not passing an argument??
   tripList.on('update', render)
 
   // trigger render when the table is sorted
@@ -353,12 +360,18 @@ $(document).ready(() => {
 
   // keydown event for trip-filter-form
   $('#trip-filter-form').on('keyup', () => {
-    console.log('event');
-    // console.log(event);
+    // pull out the input value from the form
     let input = event.target.value
     console.log(input);
+    // pull out which option was selected in the form
     let option = $('#trip-filter-form option:selected').html();
+    option = option.toLowerCase();
     console.log(option);
-    render();
+
+    // set the filter in the filterValues property of the collection with the option as the key and the input as the value
+    tripList.filterValues[option] = input;
+
+    // call render and render will make the tripList collection be filtered and will display the result of that filter
+    render(tripList);
   }) // keyup
 }); // .ready

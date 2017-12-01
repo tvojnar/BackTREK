@@ -6,20 +6,20 @@ const TripList = Backbone.Collection.extend({
   url: 'https://ada-backtrek-api.herokuapp.com/trips',
   // default comparator so it sorts by name to start off
   comparator: name,
-  filterData {
+  filterData() {
     console.log('in filterData');
     // TODO: add if/else to do differnt filters depending on what the input and option properties are
-    if (this.option === 'continent') {
+    if (this.filterValues['continent']) {
       filtered = this.filter(function(model) {
         console.log(`in filter! model: ${model}`);
-        return model.get('continent').includes(input);
+        return model.get('continent').includes(filterValues['continent']);
       }) // _filter
       // return a new collection that contains all the trips that passed the filter
       return new TripList(filtered);
     } // if 'continent'
-  } // filterData,
-  option: "", // start as an empty string
-  input: "",  // start as an empty string
+    return this;
+  }, // filterData,
+  filterValues: {}, // set filter option
 });
 
 export default TripList;
