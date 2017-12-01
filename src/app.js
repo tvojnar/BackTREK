@@ -276,6 +276,11 @@ const reserveStatus = function reserveStatus(status, message) {
   $('#form-status').append(resStatusHtml);
 } // reserveStatus
 
+// function to call differnt filter methods
+const filterTrips = (event) => {
+  alert('in filterTrips');
+  console.log(this);
+};
 
 
 $(document).ready(() => {
@@ -338,4 +343,14 @@ $(document).ready(() => {
     });
   }) // forEach
 
+  // keydown event for trip-filter-form
+  $('#trip-filter-form').on('keyup', () => {
+    console.log('event');
+    // console.log(event);
+    let input = event.target.value
+    console.log(input);
+    let opt = $('#trip-filter-form option:selected').html();
+    console.log(opt);
+    filterTrips(input);
+  }) // keyup
 }); // .ready
