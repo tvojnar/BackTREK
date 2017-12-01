@@ -374,4 +374,16 @@ $(document).ready(() => {
     // call render and render will make the tripList collection be filtered and will display the result of that filter
     render(tripList);
   }) // keyup
+
+  // click action for clear-filters button
+  $('#clear-filter').on('click', (event) => {
+    console.log('in clear-filter');
+      tripList.filterValues
+      for (const prop of Object.keys(tripList.filterValues)) {
+        delete tripList.filterValues[prop];
+      }  // for delete loop
+
+      render(tripList);
+
+  }) // .on for clear-filter
 }); // .ready
