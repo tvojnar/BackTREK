@@ -1,4 +1,9 @@
-/* style for sorted th */ 
+/* button focus */
+.button:focus {
+  outline: none;
+}
+
+/* style for sorted th */
 .current-sort-field {
   background-color: darkgrey;
   color: white;
