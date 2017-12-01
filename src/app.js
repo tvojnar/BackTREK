@@ -9,6 +9,7 @@ import './css/style.css';
 // collections and models
 import TripList from 'app/collections/trip_list';
 import Trip from 'app/models/trip';
+import Reservation from 'app/models/reservation';
 
 const TRIP_FIELDS = ['name', 'continent', 'category', 'about', 'weeks', 'cost']
 
@@ -19,6 +20,52 @@ const tripList = new TripList();
 let allTripsTemplate;
 let tripDetailsTemplate;
 let tripFormTemplate;
+let statusTemplate;
+
+// function to reserve a trip
+const reserveTrip = (event) => {
+  event.preventDefault();
+  console.log('in reserveTrip');
+
+  const RES_FIELDS = ['name', 'age', 'email', 'trip_id'];
+  let resData = {}
+
+  RES_FIELDS.forEach((field) => {
+    const input = $(`#reservation-form input[name="${ field }"]`);
+    const val = input.val();
+
+    if (val != '') {
+      resData[field] = val;
+    }
+
+    input.val('');
+  }) // forEach
+
+  const reservation = new Reservation(resData);
+
+  console.log(`reservation`);
+  console.log(reservation);
+
+  // display client side validation error messages if the user entered invlalid input and break out of the function before you make the api request to post the reservation
+  if (!reservation.isValid()) {
+    handleValidationErrors(reservation.validationError, 'form');
+    return;
+  } // if isVALID
+
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('successfully saved the reservation');
+      reserveStatus('success', 'You are reserved for the trip!')
+    }, // success
+    error: (model, response) => {
+      console.log('Failed to reserve the trip! Server response:');
+      console.log(response);
+      console.log(response.responseJSON["errors"]);
+
+      handleValidationErrors(response.responseJSON["errors"], 'form');
+    }, // error
+  }) // save
+} // reserveTrip
 
 // funtion to generate the html for the trip details
 const renderDetailsHtml = (model) => {
@@ -36,6 +83,12 @@ const renderDetailsHtml = (model) => {
 
   // I need to define the click function for hide-trip details within the function that generates the html for the button
   $('#hide-details').on('click', hideDetails)
+
+  // add click event for the reservation form in this HTML
+  $('#reservation-form').on('submit', (event) => {
+    event.preventDefault();
+    reserveTrip(event);
+  });
 
 } // renderDetailsHtml
 
@@ -133,11 +186,18 @@ let readFormData = function readFormData() {
 } // readFormData
 
 // function to display validation failure error message
-const handleValidationErrors = function handleValidationErrors(errors) {
+const handleValidationErrors = function handleValidationErrors(errors, nextFunction) {
+  console.log('in handleValidationErrors');
   for (let field in errors) {
-    for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
-    }
+    if (nextFunction === 'top') {
+      for (let problem of errors[field]) {
+        reportStatus('error', `${field}: ${problem}`);
+      } // for
+    } else if (nextFunction === 'form') {
+      for (let problem of errors[field]) {
+        reserveStatus('error', `${field}: ${problem}`);
+      } // for
+    }// if else if
   }
 } // handleValidationErrors
 
@@ -153,7 +213,8 @@ const addTripHandler = function(event) {
 
   // break out of the function if the trip is not valid
   if (!trip.isValid()) {
-    handleValidationErrors(trip.validationError);
+    console.log('in if for !trip.isValid');
+    handleValidationErrors(trip.validationError, 'top');
     return;
   }
 
@@ -173,22 +234,43 @@ const addTripHandler = function(event) {
       // remove the trip if it was not saved
       // tripList.remove(model);
 
-      handleValidationErrors(response.responseJSON["errors"]);
+      handleValidationErrors(response.responseJSON["resErrors"], 'top');
     },
   }) // book.save
 } // addTripHandler
 
-// funtion to report statuses
+// clear status messages when you click the x button
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+} // clear status
+
+// funtion to report statuses at the top of the page
 const reportStatus = function reportStatus(status, message) {
   console.log(`reporting ${ status } status: ${ message }`);
 
-  // Should probably use an Underscore template here.
-  const statusHTML = `<li class="${ status }">${ message }</li>`;
+  // make an object to pass to the template method
+  let statusMessage = {status: status, message: message}
+
+  // template method generates the li html for each message
+  const statusHTML = statusTemplate(statusMessage);
 
   // note the symetry with clearStatus()
   $('#status-messages ul').append(statusHTML);
   $('#status-messages').show();
+
 } // reportStatus
+
+// function to report status for the reserve trip form
+const reserveStatus = function reserveStatus(status, message) {
+  const statusObj = { status: status, message: message }
+
+  const resStatusHtml = statusTemplate(statusObj);
+
+  $('#form-status').append(resStatusHtml);
+} // reserveStatus
+
+
 
 $(document).ready(() => {
   // make the underscore function to list all the trips
@@ -199,6 +281,10 @@ $(document).ready(() => {
 
   // underscore function to get form to make a new trip
   tripFormTemplate = _.template($('#trip-form-template').html());
+
+
+  // underscore template to show status messages
+  statusTemplate = _.template($('#status-message-template').html());
 
   // get the trips from the api when the user clicks the 'Explore our trips!'.
   $('#get-trips').on('click', showAllTrips)
@@ -223,4 +309,7 @@ $(document).ready(() => {
     // make the form go away when you submit the form
     $('#add-trip-form').on('submit', addTripHandler)
   }) // add-trip.on
+
+  // click event to clear status messages
+  $('#status-messages button.clear').on('click', clearStatus);
 }); // .ready

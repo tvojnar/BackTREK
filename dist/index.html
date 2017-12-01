@@ -12,9 +12,9 @@
   </header>
   <main>
     <section id="status-messages">
-    <!-- <button class="clear float-right">
+    <button class="clear float-right">
       <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
-    </button> -->
+    </button>
     <ul>
     </ul>
   </section>
@@ -38,8 +38,6 @@
     </tbody>
   </table>
   <article id="trip-details">
-    <div id="book-trip">
-    </div>
   </article>
 </section>
 
@@ -70,6 +68,24 @@
     <li>Cost: <%- cost %></li>
   </ul>
   <p> <%- about %> </p>
+
+  <h4 id="form-title">Book this trip!</h4>
+  <ul id="form-status">
+  </ul>
+  <form id="reservation-form">
+    <input type="hidden" id="trip_id" name="trip_id" value="<%- id %>">
+
+    <label for="name">Name</label>
+    <input type="text" name="name"></input>
+
+    <label for="age">Age</label>
+    <input type="text" name="age"></input>
+
+    <label for="email">Email</label>
+    <input type="text" name="email"></input>
+
+    <input type="submit" value="Book trip!" class="button"></input>
+  </form>
 </script>
 
 <script type="text/template" id="trip-form-template">
@@ -95,7 +111,12 @@
     <input type="submit" value="Add trip!" class="button submit-trip"></input>
     <button id="cancel" class="button">Cancel</button>
   </form>
+</script>
 
+<script type="text/template" id="status-message-template">
+  <li class="<%- status %>">
+    <%- message %>
+  </li>
 </script>
 
 </body>
