@@ -30,6 +30,11 @@ const Trip = Backbone.Model.extend({
     if (!attributes.cost) {
       errors.cost = ['cannot be blank'];
     }
+
+    if (Object.keys(errors).length < 1) {
+      return false;
+    }
+    return errors;
   } // validate
 });
 
