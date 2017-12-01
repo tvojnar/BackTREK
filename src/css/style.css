@@ -1,3 +1,8 @@
+/* style for sorted th */ 
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
 
 /* Styles for error section at the top */
 #status-messages {

@@ -144,6 +144,12 @@ const render = function render(tripList) {
     // append the tr with HTML for each trip to the tbody
     tripListElement.append($(tripHTML));
   }) // forEach
+
+  // remove the css styling for the previously sorted th
+  $('th.sort').removeClass('current-sort-field');
+
+  // add css styling to the newly softed th
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 } // render
 
 // function to show all the trips when the 'Explore our trips' button is clicked
@@ -323,12 +329,12 @@ $(document).ready(() => {
 
     //add a click event to each th
     headerElement.on('click', (event) => {
-       console.log(`Sorting table by ${ field }`);
+      console.log(`Sorting table by ${ field }`);
 
-       // change the comparator and then call sort
-       // sort will trigger render 
-       tripList.comparator = field;
-       tripList.sort();
+      // change the comparator and then call sort
+      // sort will trigger render
+      tripList.comparator = field;
+      tripList.sort();
     });
   }) // forEach
 
