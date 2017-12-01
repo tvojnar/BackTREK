@@ -281,6 +281,10 @@ const filterTrips = (input, option) => {
   console.log(`in filterTrips and input: ${input} and option: ${option}`);
 
   // TODO: call different filter methods for the collection depending on which option was selected!
+  // QUESTION: do i even need this function now or should I just go though render?
+  if (option = 'continent') {
+    tripList.filterForContinent(input);
+  }
 };
 
 
@@ -306,6 +310,9 @@ $(document).ready(() => {
 
   // trigger render when the table is sorted
   tripList.on('sort', render);
+
+  // trigger render when the tripList is filtered
+  tripList.on('filter', render);
 
   // click event to add a trip
   // keeping this all in the .ready for now so it is easier to refactor to add a modal later
@@ -352,6 +359,6 @@ $(document).ready(() => {
     console.log(input);
     let option = $('#trip-filter-form option:selected').html();
     console.log(option);
-    filterTrips(input, option);
+    render();
   }) // keyup
 }); // .ready
