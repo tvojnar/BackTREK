@@ -42,8 +42,15 @@ const reserveTrip = (event) => {
   }) // forEach
 
   const reservation = new Reservation(resData);
+
   console.log(`reservation`);
   console.log(reservation);
+
+  // display client side validation error messages if the user entered invlalid input and break out of the function before you make the api request to post the reservation 
+  if (!reservation.isValid()) {
+    handleValidationErrors(reservation.validationError, 'form');
+    return;
+  } // if isVALID
 
   reservation.save({}, {
     success: (model, response) => {
@@ -55,7 +62,6 @@ const reserveTrip = (event) => {
       console.log(response);
       console.log(response.responseJSON["errors"]);
 
-      // QUESTION: why isn't handleValidationErrors defined in this scope? Might work now
       handleValidationErrors(response.responseJSON["errors"], 'form');
     }, // error
   }) // save
@@ -181,6 +187,7 @@ let readFormData = function readFormData() {
 
 // function to display validation failure error message
 const handleValidationErrors = function handleValidationErrors(errors, nextFunction) {
+  console.log('in handleValidationErrors');
   for (let field in errors) {
     if (nextFunction === 'top') {
       for (let problem of errors[field]) {
