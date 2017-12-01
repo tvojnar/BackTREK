@@ -277,9 +277,10 @@ const reserveStatus = function reserveStatus(status, message) {
 } // reserveStatus
 
 // function to call differnt filter methods
-const filterTrips = (event) => {
-  alert('in filterTrips');
-  console.log(this);
+const filterTrips = (input, option) => {
+  console.log(`in filterTrips and input: ${input} and option: ${option}`);
+
+  // TODO: call different filter methods for the collection depending on which option was selected!
 };
 
 
@@ -349,8 +350,8 @@ $(document).ready(() => {
     // console.log(event);
     let input = event.target.value
     console.log(input);
-    let opt = $('#trip-filter-form option:selected').html();
-    console.log(opt);
-    filterTrips(input);
+    let option = $('#trip-filter-form option:selected').html();
+    console.log(option);
+    filterTrips(input, option);
   }) // keyup
 }); // .ready
