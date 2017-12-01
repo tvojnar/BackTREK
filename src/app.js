@@ -292,6 +292,9 @@ $(document).ready(() => {
   // when we update tripList we will rerender the page
   tripList.on('update', render)
 
+  // trigger render when the table is sorted
+  tripList.on('sort', render);
+
   // click event to add a trip
   // keeping this all in the .ready for now so it is easier to refactor to add a modal later
   $('#add-trip').on('click', () => {
@@ -312,4 +315,21 @@ $(document).ready(() => {
 
   // click event to clear status messages
   $('#status-messages button.clear').on('click', clearStatus);
+
+  // click handler to sort the table when one of the th is clicked on
+  TRIP_FIELDS.forEach((field) => {
+    // find th with the class sort and the field
+    const headerElement = $(`th.sort.${field}`);
+
+    //add a click event to each th
+    headerElement.on('click', (event) => {
+       console.log(`Sorting table by ${ field }`);
+
+       // change the comparator and then call sort
+       // sort will trigger render 
+       tripList.comparator = field;
+       tripList.sort();
+    });
+  }) // forEach
+
 }); // .ready
