@@ -14,10 +14,19 @@ const TripList = Backbone.Collection.extend({
       for (var key in this.filterValues) {
         if (key === 'continent' || key === 'category'  || key === 'name') {
           filtered = filtered.filter((model) => {
-            console.log(`in filter! model: ${model}`);
+            console.log(`in filter for strings! model: ${model}`);
             return model.get(key).includes(this.filterValues[key]);
           }) // _filter
         } // if 'continent', 'name', or 'category'
+
+        if (key === 'weeks' || key === 'cost') {
+          filtered = filtered.filter((model) => {
+            console.log(`in filter for name/cost! model: ${model}`);
+            console.log(`attribute = ${model.get(key)}`);
+            console.log(`input = ${this.filterValues[key]}`);
+            return model.get(key) <= this.filterValues[key];
+          }) // _filter
+        } // if 'weeks', 'cost'
       } // for loop
     } // if filterValues is empty
     return filtered;
