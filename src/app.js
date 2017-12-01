@@ -46,7 +46,7 @@ const reserveTrip = (event) => {
   console.log(`reservation`);
   console.log(reservation);
 
-  // display client side validation error messages if the user entered invlalid input and break out of the function before you make the api request to post the reservation 
+  // display client side validation error messages if the user entered invlalid input and break out of the function before you make the api request to post the reservation
   if (!reservation.isValid()) {
     handleValidationErrors(reservation.validationError, 'form');
     return;
@@ -213,6 +213,7 @@ const addTripHandler = function(event) {
 
   // break out of the function if the trip is not valid
   if (!trip.isValid()) {
+    console.log('in if for !trip.isValid');
     handleValidationErrors(trip.validationError, 'top');
     return;
   }
