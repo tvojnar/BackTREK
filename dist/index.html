@@ -11,35 +11,56 @@
     <button id="add-trip" class="button">Add a trip</button>
   </header>
   <main>
+    <div class="row">
+
+
+      <div id="filter container" class="large-3 column">
+        <form id="trip-filter-form">
+          <select name="category">
+            <option style="display:none;" selected>Filter trips by</option>
+            <option value="name">Trip Name</option>
+            <option value="continent">Continent</option>
+            <option value="category">Category</option>
+            <option value="continent">Duration</option>
+            <option value="cost">Cost</option>
+          </select>
+
+          <input type="text"/>
+
+          <input type="submit" class="button" />
+
+        </form>
+      </div>
+    </div>
     <section id="status-messages">
-    <button class="clear float-right">
-      <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
-    </button>
-    <ul>
-    </ul>
-  </section>
-  <section id="place-for-form"></section>
+      <button class="clear float-right">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button>
+      <ul>
+      </ul>
+    </section>
+    <section id="place-for-form"></section>
 
-  <section id="start-background">
-    <button id="get-trips" class="button">Explore our trips!</button>
-  </section>
+    <section id="start-background">
+      <button id="get-trips" class="button">Explore our trips!</button>
+    </section>
 
-  <section id="main-page" class="row">
-    <table id="trip-table">
-      <thead>
-        <th class="sort name">Name</th>
-        <th class="sort continent">Continent</th>
-        <th class="sort category">Category</th>
-        <th class="sort weeks">Weeks</th>
-        <th class="sort cost">Cost</th>
-      </thead>
-      <tbody id="trip-list">
+    <section id="main-page" class="row">
+      <table id="trip-table">
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
       </tbody>
-    </tbody>
-  </table>
-  <article id="trip-details">
-  </article>
-</section>
+    </table>
+    <article id="trip-details">
+    </article>
+  </section>
 
 </main>
 <footer>
